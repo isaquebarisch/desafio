@@ -9,6 +9,17 @@ import java.util.Objects;
  * Entidade Device representa um dispositivo no sistema.
  * Esta classe mapeia para a tabela "devices" no banco de dados.
  *
+ * Testes existentes:
+ * - Não há testes específicos para esta classe de modelo
+ * - A funcionalidade de prePersist que define o creationTime não é testada diretamente
+ * - O comportamento da entidade é testado indiretamente através dos testes de serviço e controlador
+ *
+ * Possíveis melhorias nos testes:
+ * - Adicionar testes unitários para validar os métodos equals, hashCode e toString
+ * - Testar o comportamento do método prePersist em um ambiente JPA simulado
+ * - Verificar o comportamento da entidade com valores extremos ou nulos
+ * - Adicionar testes para validar as constraints JPA (como @Column(nullable = false))
+ *
  * Possíveis melhorias:
  * - Adicionar histórico de mudanças de estado
  * - Incluir campos adicionais como descrição, número de série, modelo, etc.
