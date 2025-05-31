@@ -12,6 +12,29 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Handler global de exceções que centraliza o tratamento de erros da aplicação.
+ * Converte exceções em respostas HTTP apropriadas com mensagens informativas.
+ *
+ * Testes existentes:
+ * - Não há testes específicos para o GlobalExceptionHandler
+ * - O comportamento é testado parcial e indiretamente via DeviceControllerIntegrationTest
+ * - O tratamento de DeviceNotFoundException é testado quando se busca um ID inexistente
+ * - O tratamento de InvalidOperationException é testado ao tentar deletar dispositivos em uso
+ *
+ * Possíveis melhorias nos testes:
+ * - Implementar testes unitários específicos para cada método handler usando MockMvc
+ * - Testar o formato e conteúdo das respostas de erro (status HTTP, corpo, cabeçalhos)
+ * - Verificar o comportamento com diferentes tipos de exceções e parâmetros
+ * - Testar handling de validação (MethodArgumentNotValidException) com diferentes erros de validação
+ * - Adicionar testes para verificar o formato do timestamp e outros campos da resposta
+ *
+ * Possíveis melhorias:
+ * - Adicionar mais detalhes às respostas de erro (códigos de erro, links para documentação)
+ * - Implementar logging detalhado das exceções para fins de monitoramento
+ * - Adicionar suporte a internacionalização de mensagens de erro
+ * - Implementar mecanismo para correlacionar erros com request IDs para facilitar o troubleshooting
+ */
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
