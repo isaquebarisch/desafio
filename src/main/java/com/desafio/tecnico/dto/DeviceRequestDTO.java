@@ -3,13 +3,9 @@ package com.desafio.tecnico.dto;
 import com.desafio.tecnico.model.Device.DeviceState;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+import java.util.Objects;
+
 public class DeviceRequestDTO {
 
     @NotBlank(message = "Nome do dispositivo não pode ser vazio")
@@ -20,4 +16,64 @@ public class DeviceRequestDTO {
 
     @NotNull(message = "Estado do dispositivo é obrigatório")
     private DeviceState state;
+
+    // Construtores
+    public DeviceRequestDTO() {
+    }
+
+    public DeviceRequestDTO(String name, String brand, DeviceState state) {
+        this.name = name;
+        this.brand = brand;
+        this.state = state;
+    }
+
+    // Getters e Setters
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public DeviceState getState() {
+        return state;
+    }
+
+    public void setState(DeviceState state) {
+        this.state = state;
+    }
+
+    // equals, hashCode e toString
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DeviceRequestDTO that = (DeviceRequestDTO) o;
+        return Objects.equals(name, that.name) &&
+               Objects.equals(brand, that.brand) &&
+               state == that.state;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, brand, state);
+    }
+
+    @Override
+    public String toString() {
+        return "DeviceRequestDTO{" +
+                "name='" + name + '\'' +
+                ", brand='" + brand + '\'' +
+                ", state=" + state +
+                '}';
+    }
 }
