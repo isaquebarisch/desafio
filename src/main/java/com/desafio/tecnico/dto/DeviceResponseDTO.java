@@ -5,6 +5,15 @@ import com.desafio.tecnico.model.Device.DeviceState;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+/**
+ * DTO (Data Transfer Object) para retornar dados de dispositivos nas respostas da API.
+ * Contém todos os atributos do dispositivo, incluindo identificador e data de criação.
+ *
+ * Possíveis melhorias:
+ * - Implementar formatação personalizada para campos de data
+ * - Adicionar links HATEOAS para melhorar a navegabilidade da API
+ * - Incluir campos adicionais como URLs de recursos relacionados
+ */
 public class DeviceResponseDTO {
     private Long id;
     private String name;
