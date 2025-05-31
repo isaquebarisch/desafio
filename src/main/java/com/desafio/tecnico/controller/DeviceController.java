@@ -18,12 +18,31 @@ import java.util.List;
  * Controlador REST responsável por expor os endpoints da API de Dispositivos.
  * Implementa operações CRUD e buscas especializadas seguindo o padrão RESTful.
  *
+ * Testes existentes (em DeviceControllerIntegrationTest.java):
+ * - testCreateDevice: Verifica a criação de dispositivo via API
+ * - testGetAllDevices: Testa a listagem de todos os dispositivos
+ * - testGetDeviceById: Testa a recuperação de um dispositivo específico
+ * - testUpdateDevice: Verifica a atualização completa de um dispositivo
+ * - testPartialUpdateDevice: Testa a atualização parcial de um dispositivo
+ * - testDeleteDevice: Verifica a exclusão de um dispositivo
+ * - testCannotDeleteDeviceInUse: Testa a regra de negócio que impede exclusão de dispositivos em uso
+ * - testGetDevicesByBrand: Verifica a filtragem de dispositivos por marca
+ * - testGetDevicesByState: Testa a filtragem de dispositivos por estado
+ *
+ * Possíveis melhorias nos testes:
+ * - Adicionar testes unitários para o controller usando MockMvc (além dos testes de integração)
+ * - Implementar testes para os status HTTP e cabeçalhos de resposta
+ * - Testar comportamento com diferentes formatos de solicitação (JSON, XML, etc)
+ * - Adicionar testes de segurança para controle de acesso (quando implementado)
+ * - Verificar o comportamento com solicitações inválidas ou malformadas
+ * - Testar handling de exceções via GlobalExceptionHandler
+ *
  * Possíveis melhorias:
  * - Implementar paginação para endpoints que retornam listas
  * - Adicionar filtros adicionais (por data de criação, nome, etc.)
  * - Implementar ordenação dos resultados
  * - Adicionar cache para operações de leitura frequentes
- *
+ * - Implementar HATEOAS para melhor navegabilidade da API
  */
 @RestController
 @RequestMapping("/api/v1/devices")
