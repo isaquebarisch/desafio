@@ -18,6 +18,26 @@ import java.util.stream.Collectors;
  * Serviço responsável pela lógica de negócios relacionada a dispositivos.
  * Implementa as regras de validação e operações CRUD.
  *
+ * Testes existentes:
+ * - createDevice_ShouldReturnDeviceResponseDTO: Verifica se um dispositivo é criado corretamente
+ * - getDeviceById_ShouldReturnDeviceResponseDTO: Testa a busca de um dispositivo por ID
+ * - getDeviceById_ShouldThrowDeviceNotFoundException: Verifica se a exceção é lançada quando o dispositivo não existe
+ * - getAllDevices_ShouldReturnListOfDevices: Testa a listagem de todos os dispositivos
+ * - getDevicesByBrand_ShouldReturnListOfDevices: Verifica a busca de dispositivos por marca
+ * - getDevicesByState_ShouldReturnListOfDevices: Testa a busca de dispositivos por estado
+ * - updateDevice_ShouldUpdateAndReturnDevice: Verifica a atualização completa de um dispositivo
+ * - updateDevice_ShouldThrowInvalidOperationException_WhenDeviceInUse: Verifica se a exceção é lançada ao tentar atualizar nome/marca de dispositivo em uso
+ * - partialUpdateDevice_ShouldUpdateOnlySomeFields: Testa a atualização parcial de um dispositivo
+ * - deleteDevice_ShouldDeleteDevice: Verifica a exclusão de um dispositivo
+ * - deleteDevice_ShouldThrowInvalidOperationException_WhenDeviceInUse: Testa se a exceção é lançada ao tentar excluir dispositivo em uso
+ *
+ * Possíveis melhorias nos testes:
+ * - Adicionar testes para cenários de borda, como tentativas de atualizar o campo creationTime
+ * - Implementar testes para verificar o comportamento quando são passados valores nulos
+ * - Adicionar testes de performance para verificar o comportamento com grandes volumes de dados
+ * - Considerar testes parametrizados para validar diferentes combinações de estados e operações
+ * - Incorporar testes com boundary values para os campos de texto (nome e marca)
+ *
  * Possíveis melhorias:
  * - Implementar cache para operações de leitura frequentes
  * - Adicionar eventos para notificar alterações importantes (ex: quando um dispositivo fica indisponível)
