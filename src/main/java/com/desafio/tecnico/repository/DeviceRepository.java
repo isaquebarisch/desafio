@@ -11,6 +11,16 @@ import java.util.List;
  * Repositório para acessar e manipular dados de dispositivos no banco de dados.
  * Estende JpaRepository para herdar métodos CRUD básicos e de paginação.
  *
+ * Testes existentes:
+ * - Não há testes diretos para o repositório, apenas testes indiretos via camada de serviço
+ * - Os métodos findByBrand e findByState são testados através de DeviceServiceTest
+ *
+ * Possíveis melhorias nos testes:
+ * - Implementar testes diretos com @DataJpaTest para validar consultas personalizadas
+ * - Adicionar testes para verificar o comportamento com múltiplos registros no banco
+ * - Testar a paginação e ordenação em conjuntos de dados grandes
+ * - Verificar o comportamento de pesquisa com caracteres especiais ou case sensitivity
+ *
  * Possíveis melhorias:
  * - Adicionar consultas personalizadas com @Query para buscas mais complexas
  * - Implementar consultas com critérios dinâmicos usando Specification
