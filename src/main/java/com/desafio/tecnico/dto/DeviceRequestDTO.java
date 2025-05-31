@@ -6,6 +6,15 @@ import jakarta.validation.constraints.NotNull;
 
 import java.util.Objects;
 
+/**
+ * DTO (Data Transfer Object) para receber dados de requisições relacionadas a dispositivos.
+ * Contém validações para garantir que dados obrigatórios sejam fornecidos.
+ *
+ * Possíveis melhorias:
+ * - Adicionar validações mais específicas (ex: tamanho mínimo e máximo de strings)
+ * - Implementar validações personalizadas (ex: validação de marcas permitidas)
+ * - Adicionar grupos de validação para diferenciar validações entre criação e atualização
+ */
 public class DeviceRequestDTO {
 
     @NotBlank(message = "Nome do dispositivo não pode ser vazio")
