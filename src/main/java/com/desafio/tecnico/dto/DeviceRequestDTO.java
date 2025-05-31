@@ -10,6 +10,18 @@ import java.util.Objects;
  * DTO (Data Transfer Object) para receber dados de requisições relacionadas a dispositivos.
  * Contém validações para garantir que dados obrigatórios sejam fornecidos.
  *
+ * Testes existentes:
+ * - Não há testes diretos para validações do DTO
+ * - As anotações de validação (@NotBlank, @NotNull) são testadas indiretamente quando o controller recebe requisições
+ * - Comportamento em atualizações parciais é testado em DeviceControllerIntegrationTest
+ *
+ * Possíveis melhorias nos testes:
+ * - Adicionar testes unitários para validar as anotações de validação
+ * - Implementar testes específicos para cada constraint usando Validator
+ * - Testar comportamento com valores limítrofes e inválidos
+ * - Verificar serialização/deserialização JSON do DTO
+ * - Adicionar testes para verificar como nulos são tratados em atualizações parciais
+ *
  * Possíveis melhorias:
  * - Adicionar validações mais específicas (ex: tamanho mínimo e máximo de strings)
  * - Implementar validações personalizadas (ex: validação de marcas permitidas)
