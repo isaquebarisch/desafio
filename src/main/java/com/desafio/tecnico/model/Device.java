@@ -5,6 +5,16 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+/**
+ * Entidade Device representa um dispositivo no sistema.
+ * Esta classe mapeia para a tabela "devices" no banco de dados.
+ *
+ * Possíveis melhorias:
+ * - Adicionar histórico de mudanças de estado
+ * - Incluir campos adicionais como descrição, número de série, modelo, etc.
+ * - Implementar auditoria com @CreatedBy, @LastModifiedBy, @CreatedDate, @LastModifiedDate
+ * - Adicionar suporte a categorias/tipos de dispositivo
+ */
 @Entity
 @Table(name = "devices")
 public class Device {
@@ -19,13 +29,27 @@ public class Device {
     @Column(nullable = false)
     private String brand;
 
+    /**
+     * Estado atual do dispositivo (AVAILABLE, IN_USE, INACTIVE)
+     * Esta propriedade é fundamental para as regras de negócio
+     * relacionadas a atualizações e exclusões.
+     */
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private DeviceState state;
 
+    /**
+     * Data e hora de criação do dispositivo.
+     * Este campo é definido automaticamente pelo método prePersist
+     * e não pode ser atualizado posteriormente.
+     */
     @Column(name = "creation_time", nullable = false, updatable = false)
     private LocalDateTime creationTime;
 
+    /**
+     * Método invocado automaticamente antes da persistência inicial da entidade.
+     * Define a data/hora de criação do dispositivo como o momento atual.
+     */
     @PrePersist
     public void prePersist() {
         this.creationTime = LocalDateTime.now();
@@ -109,6 +133,13 @@ public class Device {
                 '}';
     }
 
+    /**
+     * Enum que representa os possíveis estados de um dispositivo.
+     *
+     * AVAILABLE - Dispositivo disponível para uso
+     * IN_USE - Dispositivo atualmente em uso (possui restrições para atualização e exclusão)
+     * INACTIVE - Dispositivo inativo/fora de funcionamento
+     */
     public enum DeviceState {
         AVAILABLE,
         IN_USE,
