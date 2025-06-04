@@ -82,3 +82,156 @@ public class DeviceService {
      */
     @Transactional(readOnly = true)
     public DeviceResponseDTO getDeviceById(Long id) {
+        Device device = deviceRepository.findById(id)
+            .orElseThrow(() -> new DeviceNotFoundException("Dispositivo não encontrado com ID: " + id));
+        return mapToResponseDTO(device);
+    }
+
+    /**
+     * Lista todos os dispositivos cadastrados.
+     *
+     * @return Lista de DTOs com os dados de todos os dispositivos
+     */
+    @Transactional(readOnly = true)
+    public List<DeviceResponseDTO> getAllDevices() {
+        return deviceRepository.findAll().stream()
+            .map(this::mapToResponseDTO)
+            .collect(Collectors.toList());
+    }
+
+    /**
+     * Busca dispositivos pela marca.
+     *
+     * @param brand Marca dos dispositivos a serem buscados
+     * @return Lista de DTOs com os dispositivos da marca especificada
+     */
+    @Transactional(readOnly = true)
+    public List<DeviceResponseDTO> getDevicesByBrand(String brand) {
+        return deviceRepository.findByBrandIgnoreCase(brand).stream()
+            .map(this::mapToResponseDTO)
+            .collect(Collectors.toList());
+    }
+
+    /**
+     * Busca dispositivos pelo estado.
+     *
+     * @param state Estado dos dispositivos a serem buscados
+     * @return Lista de DTOs com os dispositivos no estado especificado
+     */
+    @Transactional(readOnly = true)
+    public List<DeviceResponseDTO> getDevicesByState(DeviceState state) {
+        return deviceRepository.findByState(state).stream()
+            .map(this::mapToResponseDTO)
+            .collect(Collectors.toList());
+    }
+
+    /**
+     * Atualiza todos os campos de um dispositivo.
+     *
+     * Valida se o dispositivo está em uso antes de permitir a atualização de nome ou marca.
+     *
+     * @param id ID do dispositivo a ser atualizado
+     * @param requestDTO DTO com os novos dados do dispositivo
+     * @return DTO com os dados atualizados do dispositivo
+     * @throws DeviceNotFoundException se o dispositivo não for encontrado
+     * @throws InvalidOperationException se tentar modificar nome ou marca de um dispositivo em uso
+     */
+    @Transactional
+    public DeviceResponseDTO updateDevice(Long id, DeviceRequestDTO requestDTO) {
+        Device device = deviceRepository.findById(id)
+            .orElseThrow(() -> new DeviceNotFoundException("Dispositivo não encontrado com ID: " + id));
+
+        // Verifica se o dispositivo está em uso antes de atualizar nome ou marca
+        if (device.getState() == DeviceState.IN_USE &&
+            (!device.getName().equals(requestDTO.getName()) || !device.getBrand().equals(requestDTO.getBrand()))) {
+            throw new InvalidOperationException("Não é permitido alterar nome ou marca de um dispositivo em uso");
+        }
+
+        device.setName(requestDTO.getName());
+        device.setBrand(requestDTO.getBrand());
+        device.setState(requestDTO.getState());
+
+        Device updatedDevice = deviceRepository.save(device);
+        return mapToResponseDTO(updatedDevice);
+    }
+
+    /**
+     * Realiza uma atualização parcial de um dispositivo.
+     *
+     * Os campos nulos no DTO não serão atualizados.
+     * Valida se o dispositivo está em uso antes de permitir a atualização de nome ou marca.
+     *
+     * @param id ID do dispositivo a ser atualizado
+     * @param requestDTO DTO com os campos a serem atualizados
+     * @return DTO com os dados atualizados do dispositivo
+     * @throws DeviceNotFoundException se o dispositivo não for encontrado
+     * @throws InvalidOperationException se tentar modificar nome ou marca de um dispositivo em uso
+     */
+    @Transactional
+    public DeviceResponseDTO partialUpdateDevice(Long id, DeviceRequestDTO requestDTO) {
+        Device device = deviceRepository.findById(id)
+            .orElseThrow(() -> new DeviceNotFoundException("Dispositivo não encontrado com ID: " + id));
+
+        // Verifica se o dispositivo está em uso e se está tentando atualizar nome ou marca
+        if (device.getState() == DeviceState.IN_USE) {
+            if (requestDTO.getName() != null && !device.getName().equals(requestDTO.getName())) {
+                throw new InvalidOperationException("Não é permitido alterar o nome de um dispositivo em uso");
+            }
+            if (requestDTO.getBrand() != null && !device.getBrand().equals(requestDTO.getBrand())) {
+                throw new InvalidOperationException("Não é permitido alterar a marca de um dispositivo em uso");
+            }
+        }
+
+        // Atualiza apenas os campos não nulos
+        if (requestDTO.getName() != null) {
+            device.setName(requestDTO.getName());
+        }
+        if (requestDTO.getBrand() != null) {
+            device.setBrand(requestDTO.getBrand());
+        }
+        if (requestDTO.getState() != null) {
+            device.setState(requestDTO.getState());
+        }
+
+        Device updatedDevice = deviceRepository.save(device);
+        return mapToResponseDTO(updatedDevice);
+    }
+
+    /**
+     * Remove um dispositivo do sistema.
+     *
+     * Valida se o dispositivo não está em uso antes de permitir a exclusão.
+     *
+     * @param id ID do dispositivo a ser removido
+     * @throws DeviceNotFoundException se o dispositivo não for encontrado
+     * @throws InvalidOperationException se tentar excluir um dispositivo em uso
+     */
+    @Transactional
+    public void deleteDevice(Long id) {
+        Device device = deviceRepository.findById(id)
+            .orElseThrow(() -> new DeviceNotFoundException("Dispositivo não encontrado com ID: " + id));
+
+        // Verifica se o dispositivo está em uso antes de permitir a exclusão
+        if (device.getState() == DeviceState.IN_USE) {
+            throw new InvalidOperationException("Não é permitido excluir um dispositivo em uso");
+        }
+
+        deviceRepository.delete(device);
+    }
+
+    /**
+     * Converte uma entidade Device para um DTO DeviceResponseDTO.
+     *
+     * @param device Entidade a ser convertida
+     * @return DTO com os dados da entidade
+     */
+    private DeviceResponseDTO mapToResponseDTO(Device device) {
+        return new DeviceResponseDTO(
+            device.getId(),
+            device.getName(),
+            device.getBrand(),
+            device.getState(),
+            device.getCreationTime()
+        );
+    }
+}

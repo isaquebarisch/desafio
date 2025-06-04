@@ -174,7 +174,7 @@ Se preferir executar sem Docker:
    - Database: devices_db
    - Usuário: postgres
    - Senha: postgres
-   - Porta: 5432
+   - Porta: 5433
 
 2. Execute o projeto com Maven:
 ```bash
@@ -184,7 +184,7 @@ Se preferir executar sem Docker:
 ## 📖 Documentação da API
 A documentação Swagger está disponível em:
 ```
-http://localhost:8080/swagger-ui.html
+http://localhost:8081/swagger-ui.html
 ```
 
 ## 🧪 Testes

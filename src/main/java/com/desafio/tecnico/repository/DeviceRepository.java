@@ -47,4 +47,12 @@ public interface DeviceRepository extends JpaRepository<Device, Long> {
      * @return Lista de dispositivos no estado especificado
      */
     List<Device> findByState(DeviceState state);
+
+    /**
+     * Busca dispositivos pela marca, ignorando maiúsculas/minúsculas.
+     *
+     * @param brand Marca dos dispositivos a serem buscados
+     * @return Lista de dispositivos da marca especificada
+     */
+    List<Device> findByBrandIgnoreCase(String brand);
 }
