@@ -142,4 +142,55 @@ O modelo de domínio `Device` possui os seguintes atributos:
 └───────────────────────────┘
 ```
 
+## 🚀 Como executar o projeto
+
+### Pré-requisitos
+- [Git](https://git-scm.com/)
+- [Docker](https://www.docker.com/products/docker-desktop/)
+- [Docker Compose](https://docs.docker.com/compose/install/) (geralmente já vem com Docker Desktop)
+
+### Clonando o repositório
+```bash
+git clone [URL_DO_REPOSITÓRIO]
+cd Desafio
+```
+
+### Executando com Docker
+O projeto está configurado para ser executado facilmente com Docker Compose:
+
+```bash
+docker-compose up -d
+```
+
+Isso irá:
+1. Construir a imagem da aplicação
+2. Iniciar o banco de dados PostgreSQL
+3. Iniciar a API na porta 8080
+
+### Executando sem Docker
+Se preferir executar sem Docker:
+
+1. Certifique-se de ter o PostgreSQL instalado e configurado:
+   - Database: devices_db
+   - Usuário: postgres
+   - Senha: postgres
+   - Porta: 5432
+
+2. Execute o projeto com Maven:
+```bash
+./mvnw spring-boot:run
+```
+
+## 📖 Documentação da API
+A documentação Swagger está disponível em:
+```
+http://localhost:8080/swagger-ui.html
+```
+
+## 🧪 Testes
+Para executar os testes:
+```bash
+./mvnw test
+```
+
 [LinkedIn](https://www.linkedin.com/in/isaquebarisch/) | [GitHub](isaquebarisch) | [Portfólio](https://isaquebarisch.github.io/portfolio/) | isaquebarisch@gmail.com
